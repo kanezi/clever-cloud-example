@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: clever
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+
+# GUI tool for redis - connect to host: host.docker.internal
+  redisinsight:
+    image: redislabs/redisinsight
+    ports:
+      - '8001:8001'
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=eu-central-1
+      - USE_SINGLE_REGION=true
